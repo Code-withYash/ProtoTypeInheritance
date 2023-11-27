@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+
+// Object.create :-
+
+const VehiclePrototype = {
+  accelerate: function (increase) {
+    this.speed += increase || 5;
+    console.log(`${this.brand} ${this.model} is accelerating. Current speed: ${this.speed} mph`);
+  },
+  brake: function (decrease) {
+    this.speed -= decrease || 5;
+    console.log(`${this.brand} ${this.model} is braking. Current speed: ${this.speed} mph`);
+  },
+  refuel: function () {
+    console.log(`${this.brand} ${this.model} is refueling.`);
+  }
+};
+
+function Car(brand, model, speed, fuelType, numberOfWheels) {
+  const car = Object.create(VehiclePrototype);
+  car.brand = brand;
+  car.model = model;
+  car.speed = speed || 0;
+  car.fuelType = fuelType;
+  car.numberOfWheels = numberOfWheels;
+
+  return car;
+}
+
+const myCar = Car('Toyota', 'Camry', 0, 'gas', 4);
+
+myCar.accelerate(20);
+myCar.brake(10);
+myCar.refuel();
+
+
+
+
+//  Cunstructor Function:-
+
+function Vehicle(brand, model, speed, fuelType) {
+  this.brand = brand;
+  this.model = model;
+  this.speed = speed || 0;
+  this.fuelType = fuelType;
+}
+
+Vehicle.prototype.accelerate = function (increase) {
+  this.speed += increase || 5;
+  console.log(`${this.brand} ${this.model} is accelerating. Current speed: ${this.speed} mph`);
+};
+
+Vehicle.prototype.brake = function (decrease) {
+  this.speed -= decrease || 5;
+  console.log(`${this.brand} ${this.model} is braking. Current speed: ${this.speed} mph`);
+};
+
+Vehicle.prototype.refuel = function () {
+  console.log(`${this.brand} ${this.model} is refueling.`);
+};
+
+function Car(brand, model, speed, fuelType, numberOfWheels) {
+  Vehicle.call(this, brand, model, speed, fuelType);
+  this.numberOfWheels = numberOfWheels;
+}
+
+Car.prototype = Object.create(Vehicle.prototype);
+Car.prototype.constructor = Car;
+
+const myCar2 = new Car('Toyota', 'Camry', 0, 'gas', 4);
+
+myCar2.accelerate(20);
+myCar2.brake(10);
+myCar2.refuel();
+
+</script>
